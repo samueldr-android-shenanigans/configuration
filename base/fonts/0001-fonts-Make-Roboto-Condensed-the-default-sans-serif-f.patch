@@ -1,0 +1,65 @@
+From 61fcc252859b74389cbf254982c97fc83b9ecb4b Mon Sep 17 00:00:00 2001
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Date: Mon, 13 Dec 2021 22:56:01 -0500
+Subject: [PATCH] fonts: Make Roboto Condensed the default sans-serif font
+
+---
+ data/fonts/fonts.xml | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index a678f715..6edbbd12 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -22,18 +22,14 @@
+ <familyset version="23">
+     <!-- first font is default -->
+     <family name="sans-serif">
+-        <font weight="100" style="normal">Roboto-Thin.ttf</font>
+-        <font weight="100" style="italic">Roboto-ThinItalic.ttf</font>
+-        <font weight="300" style="normal">Roboto-Light.ttf</font>
+-        <font weight="300" style="italic">Roboto-LightItalic.ttf</font>
+-        <font weight="400" style="normal">Roboto-Regular.ttf</font>
+-        <font weight="400" style="italic">Roboto-Italic.ttf</font>
+-        <font weight="500" style="normal">Roboto-Medium.ttf</font>
+-        <font weight="500" style="italic">Roboto-MediumItalic.ttf</font>
+-        <font weight="900" style="normal">Roboto-Black.ttf</font>
+-        <font weight="900" style="italic">Roboto-BlackItalic.ttf</font>
+-        <font weight="700" style="normal">Roboto-Bold.ttf</font>
+-        <font weight="700" style="italic">Roboto-BoldItalic.ttf</font>
++        <font weight="300" style="normal">RobotoCondensed-Light.ttf</font>
++        <font weight="300" style="italic">RobotoCondensed-LightItalic.ttf</font>
++        <font weight="400" style="normal">RobotoCondensed-Regular.ttf</font>
++        <font weight="400" style="italic">RobotoCondensed-Italic.ttf</font>
++        <font weight="500" style="normal">RobotoCondensed-Medium.ttf</font>
++        <font weight="500" style="italic">RobotoCondensed-MediumItalic.ttf</font>
++        <font weight="700" style="normal">RobotoCondensed-Bold.ttf</font>
++        <font weight="700" style="italic">RobotoCondensed-BoldItalic.ttf</font>
+     </family>
+ 
+     <!-- Note that aliases must come after the fonts they reference. -->
+@@ -59,6 +55,21 @@
+     <alias name="sans-serif-condensed-light" to="sans-serif-condensed" weight="300" />
+     <alias name="sans-serif-condensed-medium" to="sans-serif-condensed" weight="500" />
+ 
++    <family name="roboto">
++        <font weight="100" style="normal">Roboto-Thin.ttf</font>
++        <font weight="100" style="italic">Roboto-ThinItalic.ttf</font>
++        <font weight="300" style="normal">Roboto-Light.ttf</font>
++        <font weight="300" style="italic">Roboto-LightItalic.ttf</font>
++        <font weight="400" style="normal">Roboto-Regular.ttf</font>
++        <font weight="400" style="italic">Roboto-Italic.ttf</font>
++        <font weight="500" style="normal">Roboto-Medium.ttf</font>
++        <font weight="500" style="italic">Roboto-MediumItalic.ttf</font>
++        <font weight="900" style="normal">Roboto-Black.ttf</font>
++        <font weight="900" style="italic">Roboto-BlackItalic.ttf</font>
++        <font weight="700" style="normal">Roboto-Bold.ttf</font>
++        <font weight="700" style="italic">Roboto-BoldItalic.ttf</font>
++    </family>
++
+     <family name="serif">
+         <font weight="400" style="normal">NotoSerif-Regular.ttf</font>
+         <font weight="700" style="normal">NotoSerif-Bold.ttf</font>
+-- 
+2.34.0
+
