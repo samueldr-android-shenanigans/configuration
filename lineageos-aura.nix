@@ -25,5 +25,12 @@ in
         sha256 = "sha256-yApALQkAGZWMhP6Gs3GXNalV9uVgMYbw3vua26mET/4=";
       };
     };
+    "device/razer/aura" = {
+      patches = [
+        # Fixes from Pixel Experience
+        #  - RazerParts (resolution / refresh rate control)
+        ./patches/android_device_razer_aura/0001-fixes-from-pe.patch
+      ];
+    };
   };
 }
