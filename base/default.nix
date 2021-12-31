@@ -3,6 +3,7 @@
 {
   imports = [
     ./fonts
+    ./lineageos
   ];
 
   ## TODO
