@@ -11,6 +11,7 @@ in
       # Basically some fluff
       "vendor/lineage" = {
         patches = [
+          ../../patches/android_vendor_lineage/0001-my-Remove-unused-apps.patch
         ];
       };
     };
