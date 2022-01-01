@@ -1,0 +1,43 @@
+From 162bce02ee2cb65c81a390edfcb5fec540820396 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Sun, 10 Oct 2021 00:14:06 +0800
+Subject: [PATCH 05/24] aura: RazerParts: comment modified interface call
+
+---
+ .../razer/parts/DeviceSettingsFragment.java   | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+index 90ddf5e..ad0b294 100755
+--- a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
++++ b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+@@ -77,16 +77,16 @@ public class DeviceSettingsFragment extends PreferenceFragment implements Prefer
+             case SCREEN_REFRESH_RATE:
+                 int parseInt = Integer.parseInt((String) o);
+                 Log.e(TAG, "To set rate: "+parseInt);
+-                IWindowManager windowManagerService = WindowManagerGlobal.getWindowManagerService();
+-                if (windowManagerService == null) {
+-                    Log.e(TAG, "fps interface failure");
+-                    return false;
+-                }
+-                try {
+-                    windowManagerService.setDisplayRefreshRate(0, parseInt);
+-                } catch(RemoteException e) {
+-                    Log.e(TAG, "Error settings refresh rate", e);
+-                }
++                // IWindowManager windowManagerService = WindowManagerGlobal.getWindowManagerService();
++                // if (windowManagerService == null) {
++                //     Log.e(TAG, "fps interface failure");
++                //     return false;
++                // }
++                // try {
++                //     windowManagerService.setDisplayRefreshRate(0, parseInt);
++                // } catch(RemoteException e) {
++                //     Log.e(TAG, "Error settings refresh rate", e);
++                // }
+                 Settings.System.putInt(getContext().getContentResolver(), MIN_REFRESH_RATE, parseInt);
+ 	            Settings.System.putInt(getContext().getContentResolver(), PEAK_REFRESH_RATE, parseInt);
+                 Settings.System.putFloat(getContext().getContentResolver(), PREFERRED_REFRESH_RATE,
+-- 
+2.34.0
+

@@ -1,0 +1,24 @@
+From 88db01b18f34cec05a61be5c6b2b502db8b883ee Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Thu, 7 Oct 2021 21:36:59 +0800
+Subject: [PATCH 03/24] aura: RazerParts: fix switch not work
+
+---
+ RazerParts/src/com/razer/parts/ChromaFragment.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/RazerParts/src/com/razer/parts/ChromaFragment.java b/RazerParts/src/com/razer/parts/ChromaFragment.java
+index 8664de9..323bbc2 100755
+--- a/RazerParts/src/com/razer/parts/ChromaFragment.java
++++ b/RazerParts/src/com/razer/parts/ChromaFragment.java
+@@ -63,6 +63,7 @@ public class ChromaFragment extends PreferenceFragment implements Preference.OnP
+             boolean enabled = (boolean) o;
+             if(enabled) {
+                 mManager.systemReady();
++                mManager.loadMcuWithParams(preference.getContext());
+             } else {
+                 mManager.suspendThs();
+             }
+-- 
+2.34.0
+

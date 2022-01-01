@@ -1,0 +1,32 @@
+From 3c6173fc49fe52661e1b8d88f3892f4d33ad2ba0 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Fri, 8 Oct 2021 00:34:58 +0800
+Subject: [PATCH 15/24] aura: sepolicy: add missing policy for snap camera
+
+---
+ sepolicy/vendor/camera_server.te | 1 +
+ sepolicy/vendor/snap_app.te      | 2 ++
+ 2 files changed, 3 insertions(+)
+ create mode 100644 sepolicy/vendor/camera_server.te
+ create mode 100644 sepolicy/vendor/snap_app.te
+
+diff --git a/sepolicy/vendor/camera_server.te b/sepolicy/vendor/camera_server.te
+new file mode 100644
+index 0000000..ae911f9
+--- /dev/null
++++ b/sepolicy/vendor/camera_server.te
+@@ -0,0 +1 @@
++allow cameraserver property_socket:sock_file write;
+\ No newline at end of file
+diff --git a/sepolicy/vendor/snap_app.te b/sepolicy/vendor/snap_app.te
+new file mode 100644
+index 0000000..507126e
+--- /dev/null
++++ b/sepolicy/vendor/snap_app.te
+@@ -0,0 +1,2 @@
++allow snap_app theme_prop:file read;
++allow snap_app vendor_persist_camera_prop:file read;
+\ No newline at end of file
+-- 
+2.34.0
+

@@ -1,0 +1,73 @@
+From 9f7466c2d89bbbf974330e51cfcca5ca1ccc3634 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Thu, 7 Oct 2021 20:40:03 +0800
+Subject: [PATCH 13/24] aura: Uprev audio to 6.0
+
+---
+ device.mk    |  4 ++--
+ manifest.xml | 22 ++++++++++++++++++++--
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/device.mk b/device.mk
+index 761c2b8..7577b5b 100644
+--- a/device.mk
++++ b/device.mk
+@@ -100,8 +100,8 @@ PRODUCT_PACKAGES += \
+ 
+ # Audio
+ PRODUCT_PACKAGES += \
+-    android.hardware.audio@5.0-impl:32 \
+-    android.hardware.audio.effect@5.0-impl:32 \
++    android.hardware.audio@6.0-impl:32 \
++    android.hardware.audio.effect@6.0-impl:32 \
+     android.hardware.audio.service \
+     android.hardware.soundtrigger@2.2-impl:32 \
+     audio.a2dp.default \
+diff --git a/manifest.xml b/manifest.xml
+index 833d689..c2adfe1 100644
+--- a/manifest.xml
++++ b/manifest.xml
+@@ -2,7 +2,7 @@
+     <hal format="hidl">
+         <name>android.hardware.audio</name>
+         <transport>hwbinder</transport>
+-        <version>5.0</version>
++        <version>6.0</version>
+         <interface>
+             <name>IDevicesFactory</name>
+             <instance>default</instance>
+@@ -11,7 +11,7 @@
+     <hal format="hidl">
+         <name>android.hardware.audio.effect</name>
+         <transport>hwbinder</transport>
+-        <version>5.0</version>
++        <version>6.0</version>
+         <interface>
+             <name>IEffectsFactory</name>
+             <instance>default</instance>
+@@ -596,4 +596,22 @@
+             <instance>imsrtpservice</instance>
+         </interface>
+     </hal>
++    <hal format="hidl">
++        <name>vendor.dolby.hardware.dms</name>
++        <transport>hwbinder</transport>
++        <version>1.0</version>
++        <interface>
++            <name>IDms</name>
++            <instance>default</instance>
++        </interface>
++    </hal>
++    <hal format="hidl">
++        <name>vendor.dolby.hardware.dms</name>
++        <transport>hwbinder</transport>
++        <version>2.0</version>
++        <interface>
++            <name>IDms</name>
++            <instance>default</instance>
++        </interface>
++    </hal>
+ </manifest>
+-- 
+2.34.0
+

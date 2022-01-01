@@ -1,0 +1,36 @@
+From 13782a2cf6904190cf95993fa276be98bb7212f3 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Tue, 14 Dec 2021 00:40:13 +0800
+Subject: [PATCH 20/24] aura: overlay: remove unsupported color mode
+
+---
+ overlay/frameworks/base/core/res/res/values/config.xml | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/overlay/frameworks/base/core/res/res/values/config.xml b/overlay/frameworks/base/core/res/res/values/config.xml
+index 441cc40..75ccb9b 100644
+--- a/overlay/frameworks/base/core/res/res/values/config.xml
++++ b/overlay/frameworks/base/core/res/res/values/config.xml
+@@ -862,7 +862,6 @@
+     <integer-array name="config_availableColorModes">
+         <item>0</item> <!-- COLOR_MODE_NATURAL   -->
+         <item>1</item> <!-- COLOR_MODE_BOOSTED   -->
+-        <item>2</item> <!-- COLOR_MODE_SATURATED -->
+         <item>3</item> <!-- COLOR_MODE_AUTOMATIC -->
+     </integer-array>
+ 
+@@ -885,11 +884,9 @@
+     <integer-array name="config_displayCompositionColorModes">
+         <item>0</item> <!-- COLOR_MODE_NATURAL   -->
+         <item>1</item> <!-- COLOR_MODE_BOOSTED   -->
+-        <item>2</item> <!-- COLOR_MODE_SATURATED -->
+         <item>3</item> <!-- COLOR_MODE_AUTOMATIC -->
+     </integer-array>
+     <integer-array name="config_displayCompositionColorSpaces">
+-        <item>0</item> <!-- COLOR_MODE_DEFAULT -->
+         <item>0</item> <!-- COLOR_MODE_DEFAULT -->
+         <item>0</item> <!-- COLOR_MODE_DEFAULT -->
+         <item>7</item> <!-- COLOR_MODE_SRGB    -->
+-- 
+2.34.0
+

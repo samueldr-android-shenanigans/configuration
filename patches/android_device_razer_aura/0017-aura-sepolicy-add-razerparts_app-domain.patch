@@ -1,0 +1,48 @@
+From 6bec133913003df278bcefbc5471df90f26ea8e9 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Fri, 24 Dec 2021 11:30:40 +0800
+Subject: [PATCH 17/24] aura: sepolicy: add razerparts_app domain
+
+---
+ sepolicy/private/razerparts_app.te | 21 +++++++++++++++++++++
+ sepolicy/private/seapp_contexts    |  1 +
+ 2 files changed, 22 insertions(+)
+ create mode 100644 sepolicy/private/razerparts_app.te
+
+diff --git a/sepolicy/private/razerparts_app.te b/sepolicy/private/razerparts_app.te
+new file mode 100644
+index 0000000..4e5121b
+--- /dev/null
++++ b/sepolicy/private/razerparts_app.te
+@@ -0,0 +1,21 @@
++type razerparts_app, domain;
++typeattribute razerparts_app mlstrustedsubject;
++
++app_domain(razerparts_app)
++
++# Access sysfs_led control(Chroma)
++allow razerparts_app sysfs_leds:dir search;
++allow razerparts_app sysfs_leds:file { getattr open read write };
++
++allow razerparts_app zygote:unix_stream_socket getopt;
++allow razerparts_app system_app_data_file:dir { add_name create getattr write };
++allow razerparts_app activity_service:service_manager find;
++allow razerparts_app activity_task_service:service_manager find;
++allow razerparts_app audio_service:service_manager find;
++allow razerparts_app autofill_service:service_manager find;
++allow razerparts_app content_capture_service:service_manager find;
++allow razerparts_app gpu_service:service_manager find;
++allow razerparts_app hint_service:service_manager find;
++allow razerparts_app surfaceflinger_service:service_manager find;
++allow razerparts_app system_app_data_file:dir remove_name;
++allow razerparts_app system_app_data_file:file { create open rename setattr unlink };
+diff --git a/sepolicy/private/seapp_contexts b/sepolicy/private/seapp_contexts
+index 00d7e31..3f66133 100644
+--- a/sepolicy/private/seapp_contexts
++++ b/sepolicy/private/seapp_contexts
+@@ -1 +1,2 @@
+ user=system seinfo=platform name=.dataservices domain=vendor_dataservice_app type=radio_data_file
++user=system seinfo=platform name=com.razer.parts domain=razerparts_app type=system_app_data_file
+-- 
+2.34.0
+

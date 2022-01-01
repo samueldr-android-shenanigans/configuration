@@ -1,0 +1,39 @@
+From 2f1a787f39723964fd36ba640bc28a03e639325f Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Thu, 9 Dec 2021 22:03:13 +0800
+Subject: [PATCH 08/24] aura: RazerParts: change some description
+
+---
+ RazerParts/res/values-zh-rCN/strings.xml | 2 +-
+ RazerParts/res/values/strings.xml        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/RazerParts/res/values-zh-rCN/strings.xml b/RazerParts/res/values-zh-rCN/strings.xml
+index 21a8780..b2e66b7 100755
+--- a/RazerParts/res/values-zh-rCN/strings.xml
++++ b/RazerParts/res/values-zh-rCN/strings.xml
+@@ -6,7 +6,7 @@
+     <string name="app_name">RazerParts</string>
+ 
+     <string name="category_display">显示</string>
+-    <string name="pref_resolution">分辨率(需要重新切换手势)</string>
++    <string name="pref_resolution">分辨率(建议重启)</string>
+     <string name="pref_refresh_rate">刷新率</string>
+ 
+     <string name="category_chroma">Chroma MCU</string>
+diff --git a/RazerParts/res/values/strings.xml b/RazerParts/res/values/strings.xml
+index a677d6f..304f96f 100755
+--- a/RazerParts/res/values/strings.xml
++++ b/RazerParts/res/values/strings.xml
+@@ -18,7 +18,7 @@
+     <string name="app_name">RazerParts</string>
+ 
+     <string name="category_display">Display</string>
+-    <string name="pref_resolution">Resolution (Require reconfigure gesture)</string>
++    <string name="pref_resolution">Resolution (Reboot will solve any problem)</string>
+     <string name="pref_refresh_rate">Refresh Rate</string>
+     <string name="pref_summary_place_holder"> </string>
+ 
+-- 
+2.34.0
+

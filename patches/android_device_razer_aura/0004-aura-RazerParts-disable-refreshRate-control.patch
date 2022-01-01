@@ -1,0 +1,95 @@
+From 4e858c4b445a32b9c09a3565bdf2e6b623df30de Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Thu, 7 Oct 2021 20:42:49 +0800
+Subject: [PATCH 04/24] aura: RazerParts: disable refreshRate control
+
+[WIP] currently not working
+---
+ RazerParts/res/values-zh-rCN/strings.xml      |  2 +-
+ RazerParts/res/values/strings.xml             |  2 +-
+ RazerParts/res/xml/device_settings.xml        |  1 +
+ .../src/com/razer/parts/BootReceiver.java     | 23 ++++++++++---------
+ 4 files changed, 15 insertions(+), 13 deletions(-)
+
+diff --git a/RazerParts/res/values-zh-rCN/strings.xml b/RazerParts/res/values-zh-rCN/strings.xml
+index 21a8780..c7c0702 100755
+--- a/RazerParts/res/values-zh-rCN/strings.xml
++++ b/RazerParts/res/values-zh-rCN/strings.xml
+@@ -7,7 +7,7 @@
+ 
+     <string name="category_display">显示</string>
+     <string name="pref_resolution">分辨率(需要重新切换手势)</string>
+-    <string name="pref_refresh_rate">刷新率</string>
++    <string name="pref_refresh_rate">刷新率(还不行)</string>
+ 
+     <string name="category_chroma">Chroma MCU</string>
+     <string name="pref_chroma">Chroma</string>
+diff --git a/RazerParts/res/values/strings.xml b/RazerParts/res/values/strings.xml
+index a677d6f..7944983 100755
+--- a/RazerParts/res/values/strings.xml
++++ b/RazerParts/res/values/strings.xml
+@@ -19,7 +19,7 @@
+ 
+     <string name="category_display">Display</string>
+     <string name="pref_resolution">Resolution (Require reconfigure gesture)</string>
+-    <string name="pref_refresh_rate">Refresh Rate</string>
++    <string name="pref_refresh_rate">Refresh Rate [WIP]</string>
+     <string name="pref_summary_place_holder"> </string>
+ 
+     <string name="category_chroma">Chroma MCU</string>
+diff --git a/RazerParts/res/xml/device_settings.xml b/RazerParts/res/xml/device_settings.xml
+index ec06a3c..719c8b4 100755
+--- a/RazerParts/res/xml/device_settings.xml
++++ b/RazerParts/res/xml/device_settings.xml
+@@ -27,6 +27,7 @@
+             android:title="@string/pref_resolution" />
+ 
+         <ListPreference
++            android:enabled="false"
+             android:defaultValue="120"
+             android:icon="@drawable/cellphone_screenshot"
+             android:key="screen_refresh_rate"
+diff --git a/RazerParts/src/com/razer/parts/BootReceiver.java b/RazerParts/src/com/razer/parts/BootReceiver.java
+index 4c16ef3..e170afe 100755
+--- a/RazerParts/src/com/razer/parts/BootReceiver.java
++++ b/RazerParts/src/com/razer/parts/BootReceiver.java
+@@ -47,8 +47,6 @@ public class BootReceiver extends BroadcastReceiver {
+                 "200");
+         String resolution = (String) spfu.get(context, SCREEN_RESOLUTION,
+                 "1440");
+-        String refreshRate = (String) spfu.get(context, SCREEN_REFRESH_RATE,
+-                "120");
+         boolean chromaEnabled = (boolean) spfu.get(context, CHROMA_SWITCH,
+                 false);
+ 
+@@ -60,15 +58,18 @@ public class BootReceiver extends BroadcastReceiver {
+             ShellUtils.execCommand("wm size 1080x1920", false);
+         }
+ 
+-        int parseInt = Integer.parseInt(refreshRate);
+-        IWindowManager windowManagerService = WindowManagerGlobal.getWindowManagerService();
+-        if (windowManagerService != null) {
+-            try {
+-                windowManagerService.setDisplayRefreshRate(0, parseInt);
+-            } catch(RemoteException e) {
+-                e.printStackTrace();
+-            }
+-        }
++        /* Buggy [WIP]*/
++        // String refreshRate = (String) spfu.get(context, SCREEN_REFRESH_RATE,
++        //         "120");
++        // int parseInt = Integer.parseInt(refreshRate);
++        // IWindowManager windowManagerService = WindowManagerGlobal.getWindowManagerService();
++        // if (windowManagerService != null) {
++        //     try {
++        //         windowManagerService.setDisplayRefreshRate(0, parseInt);
++        //     } catch(RemoteException e) {
++        //         e.printStackTrace();
++        //     }
++        // }
+ 
+         if(chromaEnabled) {
+             ChromaManager tempManager = new ChromaManager();
+-- 
+2.34.0
+

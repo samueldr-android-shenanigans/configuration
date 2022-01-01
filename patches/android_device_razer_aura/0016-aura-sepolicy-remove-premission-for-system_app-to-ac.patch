@@ -1,0 +1,25 @@
+From dcb1742fb89308601c9d48ef2494fc88a0a2c81e Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Tue, 7 Dec 2021 13:49:09 +0800
+Subject: [PATCH 16/24] aura: sepolicy: remove premission for system_app to
+ access sysfs_leds
+
+hits neverallow
+---
+ sepolicy/vendor/system_app.te | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sepolicy/vendor/system_app.te b/sepolicy/vendor/system_app.te
+index b1f775f..374c869 100644
+--- a/sepolicy/vendor/system_app.te
++++ b/sepolicy/vendor/system_app.te
+@@ -1,4 +1,4 @@
+ # system_app.te
+ 
+-allow system_app sysfs_leds:dir { rw_dir_perms };
+-allow system_app sysfs_leds:file { rw_file_perms };
++# allow system_app sysfs_leds:dir { rw_dir_perms };
++# allow system_app sysfs_leds:file { rw_file_perms };
+-- 
+2.34.0
+

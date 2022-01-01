@@ -1,0 +1,34 @@
+From fb0c7ad08b27d9e592a91a3f7b8ff109dfda6ba2 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Sun, 5 Dec 2021 17:01:52 +0800
+Subject: [PATCH 06/24] aura: RazerParts: remove PREFERRED_REFRESH_RATE
+ reference
+
+---
+ RazerParts/src/com/razer/parts/DeviceSettingsFragment.java | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+index ad0b294..f815b3e 100755
+--- a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
++++ b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+@@ -34,7 +34,6 @@ import androidx.preference.SwitchPreference;
+ import androidx.preference.ListPreference;
+ import static android.provider.Settings.System.MIN_REFRESH_RATE;
+ import static android.provider.Settings.System.PEAK_REFRESH_RATE;
+-import static android.provider.Settings.System.PREFERRED_REFRESH_RATE;
+ 
+ import static com.razer.parts.Constants.*;
+ import com.razer.parts.ShellUtils;
+@@ -89,8 +88,6 @@ public class DeviceSettingsFragment extends PreferenceFragment implements Prefer
+                 // }
+                 Settings.System.putInt(getContext().getContentResolver(), MIN_REFRESH_RATE, parseInt);
+ 	            Settings.System.putInt(getContext().getContentResolver(), PEAK_REFRESH_RATE, parseInt);
+-                Settings.System.putFloat(getContext().getContentResolver(), PREFERRED_REFRESH_RATE,
+-                Float.valueOf((String) o));
+                 break;
+         }
+         SharedPreferenceUtil spfu = SharedPreferenceUtil.getInstance();
+-- 
+2.34.0
+

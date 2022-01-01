@@ -1,0 +1,248 @@
+From 5dee8ac6be801e21e09efbeb3cd47ed123f5ca4d Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Thu, 7 Oct 2021 21:18:53 +0800
+Subject: [PATCH 14/24] aura: add Dolby from SMR7
+
+---
+ RazerParts/res/values-zh-rCN/strings.xml      |  2 +-
+ RazerParts/res/values/strings.xml             |  2 +-
+ .../razer/parts/DeviceSettingsFragment.java   |  4 +++-
+ audio/audio_effects.xml                       |  2 ++
+ proprietary-files.txt                         | 22 +++++++++++++++++++
+ sepolicy/vendor/attributes                    |  3 +++
+ sepolicy/vendor/file_contexts                 |  3 +++
+ sepolicy/vendor/hal_audio_default.te          |  4 ++++
+ sepolicy/vendor/hal_dms.te                    |  5 +++++
+ sepolicy/vendor/hal_dms_default.te            | 13 +++++++++++
+ sepolicy/vendor/hwservice.te                  |  1 +
+ sepolicy/vendor/hwservice_contexts            |  2 ++
+ sepolicy/vendor/platform_app.te               |  4 ++++
+ sepolicy/vendor/property.te                   |  3 +++
+ vendor.prop                                   |  1 +
+ 15 files changed, 68 insertions(+), 3 deletions(-)
+ create mode 100644 sepolicy/vendor/attributes
+ create mode 100644 sepolicy/vendor/hal_dms.te
+ create mode 100644 sepolicy/vendor/hal_dms_default.te
+ create mode 100644 sepolicy/vendor/platform_app.te
+
+diff --git a/RazerParts/res/values-zh-rCN/strings.xml b/RazerParts/res/values-zh-rCN/strings.xml
+index b2e66b7..97a202a 100755
+--- a/RazerParts/res/values-zh-rCN/strings.xml
++++ b/RazerParts/res/values-zh-rCN/strings.xml
+@@ -13,7 +13,7 @@
+     <string name="pref_chroma">Chroma</string>
+     <string name="pref_chroma_summary">Led设置</string>
+     <string name="category_others">其他</string>
+-    <string name="pref_dolby_atmos">[WIP] Dolby Atmos™</string>
++    <string name="pref_dolby_atmos">Dolby Atmos™</string>
+     <string name="pref_dolby_atmos_summary">音效设置</string>
+     <string name="pref_doze">主动显示</string>
+     <string name="pref_doze_summary">休眠设置</string>
+diff --git a/RazerParts/res/values/strings.xml b/RazerParts/res/values/strings.xml
+index 304f96f..c68fd40 100755
+--- a/RazerParts/res/values/strings.xml
++++ b/RazerParts/res/values/strings.xml
+@@ -26,7 +26,7 @@
+     <string name="pref_chroma">Chroma</string>
+     <string name="pref_chroma_summary">Led configurator</string>
+     <string name="category_others">Others</string>
+-    <string name="pref_dolby_atmos">[WIP] Dolby Atmos™</string>
++    <string name="pref_dolby_atmos">Dolby Atmos™</string>
+     <string name="pref_dolby_atmos_summary">Audio effects</string>
+     <string name="pref_doze">Active wakeup</string>
+     <string name="pref_doze_summary">Doze settings</string>
+diff --git a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+index f97a9b4..00a60aa 100755
+--- a/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
++++ b/RazerParts/src/com/razer/parts/DeviceSettingsFragment.java
+@@ -92,7 +92,9 @@ public class DeviceSettingsFragment extends PreferenceFragment implements Prefer
+                 preference.getContext().startActivity(new Intent(getActivity(), ChromaActivity.class));
+                 break;
+             case DOLBY_ATMOS:
+-
++                preference.getContext().startActivity(new Intent()
++                    .setClassName("com.dolby.daxappui",
++                     "com.dolby.daxappui.MainActivity"));
+                 break;
+             case ACTIVE_WAKE:
+                 preference.getContext().startActivity(new Intent()
+diff --git a/audio/audio_effects.xml b/audio/audio_effects.xml
+index b201f46..415e837 100644
+--- a/audio/audio_effects.xml
++++ b/audio/audio_effects.xml
+@@ -41,6 +41,7 @@
+         <library name="volume_listener" path="libvolumelistener.so"/>
+         <library name="audiosphere" path="libasphere.so"/>
+         <library name="shoebox" path="libshoebox.so"/>
++        <library name="dap" path="libswdap.so"/>
+     </libraries>
+     <effects>
+         <effectProxy name="bassboost" library="proxy" uuid="14804144-a5ee-4d24-aa88-0002a5d5c51b">
+@@ -88,6 +89,7 @@
+         <effect name="notification_helper" library="volume_listener" uuid="0b776dde-0590-11e5-81ba-0025b32654a0"/>
+         <effect name="audiosphere" library="audiosphere" uuid="184e62ab-2d19-4364-9d1b-c0a40733866c"/>
+         <effect name="shoebox" library="shoebox" uuid="1eab784c-1a36-4b2a-b7fc-e34c44cab89e"/>
++        <effect name="dap" library="dap" uuid="9d4921da-8225-4f29-aefa-39537a04bcaa"/>
+     </effects>
+     <postprocess>
+         <stream type="music">
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index 1d1a868..04070ed 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -48,6 +48,26 @@ vendor/firmware/tfa98xx.cnt
+ vendor/lib/soundfx/libasphere.so
+ vendor/lib/soundfx/libshoebox.so
+ 
++# Dolby
++system/etc/permissions/com.dolby.daxservice.xml
++vendor/etc/dolby/dax-default.xml
++-system/priv-app/daxService/daxService.apk
++-system/app/DaxUI/DaxUI.apk
++vendor/etc/media_codecs_dolby_audio.xml
++vendor/lib64/vendor.dolby.hardware.dms@1.0.so
++vendor/lib/vendor.dolby.hardware.dms@1.0.so
++vendor/lib64/vendor.dolby.hardware.dms@1.0-impl.so
++vendor/lib/libstagefrightdolby.so
++vendor/lib64/libstagefrightdolby.so
++vendor/lib/soundfx/libswdap.so
++vendor/lib64/libdapparamstorage.so
++vendor/lib64/libdlbdsservice.so
++vendor/lib64/soundfx/libswdap.so
++vendor/lib/libdapparamstorage.so
++vendor/lib64/libdapparamstorage.so
++vendor/bin/hw/vendor.dolby.hardware.dms@1.0-service
++vendor/etc/init/vendor.dolby.hardware.dms@1.0-service.rc
++
+ # Bluetooth - from polaris V11.0.5.0.QDGMIXM
+ vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|74b5d2e7867e34c0e358cf8d82f3bfea58e97c28
+ vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc|a979981c55f3dcaf6cf2212e71b901ca4d58b959
+@@ -1019,6 +1039,8 @@ vendor/firmware/widevine.mdt
+ vendor/lib64/mediadrm/libwvdrmengine.so
+ vendor/lib64/libwvhidl.so
+ vendor/lib/mediadrm/libwvdrmengine.so
++vendor/lib64/liboemcrypto.so
++vendor/lib/liboemcrypto.so
+ 
+ # VPP - from PNX - RKQ1.200906.002
+ vendor/bin/vppservice|555301b19a86374900159423c88efd7bd9cea2f9
+diff --git a/sepolicy/vendor/attributes b/sepolicy/vendor/attributes
+new file mode 100644
+index 0000000..32bc61f
+--- /dev/null
++++ b/sepolicy/vendor/attributes
+@@ -0,0 +1,3 @@
++attribute hal_dms;
++attribute hal_dms_client;
++attribute hal_dms_server;
+\ No newline at end of file
+diff --git a/sepolicy/vendor/file_contexts b/sepolicy/vendor/file_contexts
+index bc99806..da0396d 100644
+--- a/sepolicy/vendor/file_contexts
++++ b/sepolicy/vendor/file_contexts
+@@ -19,3 +19,6 @@
+ # Services
+ /vendor/bin/wireless_init                                                                               u:object_r:wireless_init_exec:s0
+ /vendor/bin/init\.sensor\.e2pwrite\.sh                                                                  u:object_r:sensors_e2p_exec:s0
++
++# Dolby
++/(vendor|system/vendor)/bin/hw/vendor\.dolby\.hardware\.dms@1\.0-service                                u:object_r:hal_dms_default_exec:s0
+diff --git a/sepolicy/vendor/hal_audio_default.te b/sepolicy/vendor/hal_audio_default.te
+index 44075c1..89ab26d 100644
+--- a/sepolicy/vendor/hal_audio_default.te
++++ b/sepolicy/vendor/hal_audio_default.te
+@@ -1,3 +1,7 @@
+ allow hal_audio_default sysfs:dir r_dir_perms;
+ 
+ get_prop(hal_audio_default, vendor_bluetooth_prop)
++
++# Dolby
++allow hal_audio_default hal_dms_default:binder { transfer call };
++allow hal_audio_default hal_dms_hwservice:hwservice_manager find;
+diff --git a/sepolicy/vendor/hal_dms.te b/sepolicy/vendor/hal_dms.te
+new file mode 100644
+index 0000000..cd0df52
+--- /dev/null
++++ b/sepolicy/vendor/hal_dms.te
+@@ -0,0 +1,5 @@
++binder_call(hal_dms_client, hal_dms_server)
++binder_call(hal_dms_server, hal_dms_client)
++
++add_hwservice(hal_dms_server, hal_dms_hwservice)
++allow hal_dms_client hal_dms_hwservice:hwservice_manager find;
+\ No newline at end of file
+diff --git a/sepolicy/vendor/hal_dms_default.te b/sepolicy/vendor/hal_dms_default.te
+new file mode 100644
+index 0000000..d273b71
+--- /dev/null
++++ b/sepolicy/vendor/hal_dms_default.te
+@@ -0,0 +1,13 @@
++type hal_dms_default, domain;
++hal_server_domain(hal_dms_default, hal_dms)
++
++type hal_dms_default_exec, exec_type, vendor_file_type, file_type;
++init_daemon_domain(hal_dms_default)
++
++allow hal_dms_default hal_audio_default:binder call;
++allow hal_dms_default platform_app:binder call;
++allow hal_dms_default vendor_data_file:file { rw_file_perms create unlink };
++allow hal_dms_default vendor_data_file:dir { rw_file_perms add_name remove_name };
++
++allow hal_dms_default vendor_media_data_file:dir { add_name remove_name read write search open };
++allow hal_dms_default vendor_media_data_file:file { read write open create ioctl getattr lock unlink };
+\ No newline at end of file
+diff --git a/sepolicy/vendor/hwservice.te b/sepolicy/vendor/hwservice.te
+index 37762d9..0fd966e 100644
+--- a/sepolicy/vendor/hwservice.te
++++ b/sepolicy/vendor/hwservice.te
+@@ -1,2 +1,3 @@
+ type nxpese_hwservice, hwservice_manager_type;
+ type nxpnfc_hwservice, hwservice_manager_type;
++type hal_dms_hwservice, hwservice_manager_type;
+\ No newline at end of file
+diff --git a/sepolicy/vendor/hwservice_contexts b/sepolicy/vendor/hwservice_contexts
+index 4f52397..7d25811 100644
+--- a/sepolicy/vendor/hwservice_contexts
++++ b/sepolicy/vendor/hwservice_contexts
+@@ -1,2 +1,4 @@
+ vendor.nxp.nxpese::INxpEse                                    u:object_r:nxpese_hwservice:s0
+ vendor.nxp.nxpnfc::INxpNfc                                    u:object_r:nxpnfc_hwservice:s0
++vendor.dolby.hardware.dms::IDms                               u:object_r:hal_dms_hwservice:s0
++motorola.hardware.health::IMotHealth                          u:object_r:hal_health_hwservice:s0
+diff --git a/sepolicy/vendor/platform_app.te b/sepolicy/vendor/platform_app.te
+new file mode 100644
+index 0000000..c97164d
+--- /dev/null
++++ b/sepolicy/vendor/platform_app.te
+@@ -0,0 +1,4 @@
++allow platform_app hal_dms_hwservice:hwservice_manager find;
++allow platform_app hal_dms_default:binder { call transfer };
++
++allow platform_app sysfs_graphics:file r_file_perms;
+\ No newline at end of file
+diff --git a/sepolicy/vendor/property.te b/sepolicy/vendor/property.te
+index 4a04d88..85e4e99 100644
+--- a/sepolicy/vendor/property.te
++++ b/sepolicy/vendor/property.te
+@@ -3,3 +3,6 @@ type thermal_engine_prop, property_type;
+ type vendor_fp_prop, property_type;
+ 
+ type vendor_ro_camera_prop, property_type;
++
++# Dolby
++type vendor_dolby_loglevel_prop, property_type;
+diff --git a/vendor.prop b/vendor.prop
+index a736872..c491c7c 100644
+--- a/vendor.prop
++++ b/vendor.prop
+@@ -14,6 +14,7 @@ ro.config.media_vol_steps=18
+ ro.config.vc_call_vol_steps=8
+ ro.vendor.audio.sdk.fluencetype=fluencepro
+ ro.vendor.audio.sdk.ssr=false
++persist.vendor.audio_fx.current=dolby
+ vendor.audio.adm.buffering.ms=2
+ vendor.audio.dolby.ds2.enabled=false
+ vendor.audio.dolby.ds2.hardbypass=false
+-- 
+2.34.0
+

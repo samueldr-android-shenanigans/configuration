@@ -1,0 +1,50 @@
+From d25f2ffc7969a26c560c4b49bfbba68542718825 Mon Sep 17 00:00:00 2001
+From: Alcatraz323 <alcatraz32323@gmail.com>
+Date: Sat, 9 Oct 2021 23:25:59 +0800
+Subject: [PATCH 22/24] aura: build Updates
+
+---
+ device.mk | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/device.mk b/device.mk
+index 7577b5b..395bd8d 100644
+--- a/device.mk
++++ b/device.mk
+@@ -170,7 +170,13 @@ PRODUCT_PACKAGES += \
+     android.hardware.camera.provider@2.4-impl:32 \
+     android.hardware.camera.provider@2.4-service \
+     Snap \
+-    vendor.qti.hardware.camera.device@1.0.vendor
++    vendor.qti.hardware.camera.device@1.0.vendor \
++    camera.device@3.2-impl \
++    camera.sdm845 \
++    libqomx_core \
++    libmmjpeg_interface \
++    libmmcamera_interface \
++    libcameradepthcalibrator
+ 
+ # Device fstab
+ PRODUCT_PACKAGES += \
+@@ -249,7 +255,9 @@ PRODUCT_PACKAGES += \
+ 
+ # Lights
+ PRODUCT_PACKAGES += \
+-    android.hardware.light@2.0-service.aura
++    android.hardware.light@2.0-service.aura \
++    lights.qcom \
++    ro.hardware.lights=qcom
+ 
+ # LiveDisplay
+ PRODUCT_PACKAGES += \
+@@ -417,3 +425,7 @@ PRODUCT_PACKAGES += \
+ 
+ PRODUCT_BOOT_JARS += \
+     WfdCommon
++
++# system ota flash
++PRODUCT_PACKAGES += \
++    Updates
+-- 
+2.34.0
+
