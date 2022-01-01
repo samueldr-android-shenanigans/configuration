@@ -1,0 +1,113 @@
+From 043f0a4401553c882faa157f06b440eea42aa185 Mon Sep 17 00:00:00 2001
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Date: Fri, 31 Dec 2021 17:59:43 -0500
+Subject: [PATCH 3/3] [WIP] De-potato-ify
+
+LineageOS!
+---
+ AndroidProducts.mk                      | 2 +-
+ extract-files.sh                        | 6 +++---
+ potato_begonia.mk => lineage_begonia.mk | 4 ++--
+ setup-makefiles.sh                      | 6 +++---
+ system.prop                             | 3 ---
+ 5 files changed, 9 insertions(+), 12 deletions(-)
+ rename potato_begonia.mk => lineage_begonia.mk (94%)
+
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index 64cbe4e..48cb893 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -15,4 +15,4 @@
+ #
+ 
+ PRODUCT_MAKEFILES := \
+-    $(LOCAL_DIR)/potato_begonia.mk
++    $(LOCAL_DIR)/lineage_begonia.mk
+diff --git a/extract-files.sh b/extract-files.sh
+index 8749483..9bfdeff 100755
+--- a/extract-files.sh
++++ b/extract-files.sh
+@@ -16,9 +16,9 @@ INITIAL_COPYRIGHT_YEAR=2019
+ MY_DIR="${BASH_SOURCE%/*}"
+ if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi
+ 
+-POTATO_ROOT="${MY_DIR}"/../../..
++ANDROID_ROOT="${MY_DIR}"/../../..
+ 
+-HELPER="${POTATO_ROOT}/vendor/potato/build/tools/extract_utils.sh"
++HELPER="${ANDROID_ROOT}/tools/extract-utils/extract_utils.sh"
+ if [ ! -f "${HELPER}" ]; then
+     echo "Unable to find helper script at ${HELPER}"
+     exit 1
+@@ -63,7 +63,7 @@ function blob_fixup {
+ }
+ 
+ # Initialize the helper for common device
+-setup_vendor "${DEVICE}" "${VENDOR}" "${POTATO_ROOT}" true "${CLEAN_VENDOR}"
++setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" true "${CLEAN_VENDOR}"
+ 
+ extract "${MY_DIR}/proprietary-files.txt" "${SRC}" \
+         "${KANG}" --section "${SECTION}"
+diff --git a/potato_begonia.mk b/lineage_begonia.mk
+similarity index 94%
+rename from potato_begonia.mk
+rename to lineage_begonia.mk
+index fb488ad..402ba94 100644
+--- a/potato_begonia.mk
++++ b/lineage_begonia.mk
+@@ -28,11 +28,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
+ $(call inherit-product, device/xiaomi/begonia/device.mk)
+ 
+ # Inherit from our custom product configuration
+-$(call inherit-product, vendor/potato/config/common_full_phone.mk)
++$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+ 
+ ## Device identifier. This must come after all inclusions
+ PRODUCT_DEVICE := begonia
+-PRODUCT_NAME := potato_begonia
++PRODUCT_NAME := lineage_begonia
+ PRODUCT_BRAND := Redmi
+ PRODUCT_MODEL := Redmi Note 8 Pro
+ PRODUCT_MANUFACTURER := Xiaomi
+diff --git a/setup-makefiles.sh b/setup-makefiles.sh
+index 9c0fbed..3fe8380 100755
+--- a/setup-makefiles.sh
++++ b/setup-makefiles.sh
+@@ -16,9 +16,9 @@ INITIAL_COPYRIGHT_YEAR=2019
+ MY_DIR="${BASH_SOURCE%/*}"
+ if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi
+ 
+-POTATO_ROOT="${MY_DIR}/../../.."
++ANDROID_ROOT="${MY_DIR}/../../.."
+ 
+-HELPER="${POTATO_ROOT}/vendor/potato/build/tools/extract_utils.sh"
++HELPER="${ANDROID_ROOT}/tools/extract-utils/extract_utils.sh"
+ if [ ! -f "${HELPER}" ]; then
+     echo "Unable to find helper script at ${HELPER}"
+     exit 1
+@@ -26,7 +26,7 @@ fi
+ source "${HELPER}"
+ 
+ # Initialize the helper for common
+-setup_vendor "${DEVICE}" "${VENDOR}" "${POTATO_ROOT}" true
++setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" true
+ 
+ # Copyright headers and guards
+ write_headers "${DEVICE}"
+diff --git a/system.prop b/system.prop
+index 6f26d69..ed3dee8 100644
+--- a/system.prop
++++ b/system.prop
+@@ -127,9 +127,6 @@ persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.android.camera,com
+ vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.camera
+ vendor.camera.aux.packageblacklist=org.telegram.messenger,com.microsoft.teams,com.discord
+ 
+-# Cutout (POSP)
+-ro.potato.has_cutout=true
+-
+ # Charger
+ ro.charger.enable_suspend=true
+ 
+-- 
+2.34.0
+
