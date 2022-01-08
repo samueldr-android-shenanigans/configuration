@@ -6,7 +6,7 @@ let
   ;
 in
 {
-  config = mkIf (config.flavor == "linageos") {
+  config = mkIf (config.flavor == "lineageos") {
     source.dirs = {
       # Basically some fluff
       "vendor/lineage" = {
