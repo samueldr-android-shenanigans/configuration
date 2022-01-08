@@ -39,4 +39,6 @@
   #  url = "https://raw.githubusercontent.com/StevenBlack/hosts/449a0d7f613e6518ede4f3333e94f8071d3f1cd3/hosts";
   #  sha256 = "1mcn77l2m45qms7ynww2hzx0d6mja03bzj4di0s9j7spycp4540i";
   #};
+
+  ccache.enable = true;
 }
