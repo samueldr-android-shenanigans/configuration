@@ -1,0 +1,34 @@
+From b90a7289b89f677bc86f20bdc5787659df36c2cb Mon Sep 17 00:00:00 2001
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Date: Thu, 30 Dec 2021 23:26:15 -0500
+Subject: [PATCH] [my] Remove unused apps
+
+:/
+---
+ config/common_mobile.mk | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/config/common_mobile.mk b/config/common_mobile.mk
+index 1f1c2414..d9bec954 100644
+--- a/config/common_mobile.mk
++++ b/config/common_mobile.mk
+@@ -8,16 +8,12 @@ PRODUCT_PRODUCT_PROPERTIES += \
+ 
+ # AOSP packages
+ PRODUCT_PACKAGES += \
+-    Email \
+-    ExactCalculator \
+     Exchange2
+ 
+ # Lineage packages
+ PRODUCT_PACKAGES += \
+     Backgrounds \
+-    Eleven \
+     Etar \
+-    Jelly \
+     Profiles \
+     Seedvault
+ 
+-- 
+2.34.0
+
