@@ -21,6 +21,16 @@ ARGS=(
 	"$@"
 )
 
+case "$config" in
+	"lineageos-begonia"      |\
+	"lineageos-lavender"      \
+	)
+		ARGS+=(
+			-A recoveryImg                  # recovery.img, for other targets (XXX: may not exist?)
+		)
+	;;
+esac
+
 set -x
 
 time nix-build "${ARGS[@]}"
