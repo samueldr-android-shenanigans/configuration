@@ -2,7 +2,7 @@
 
 #
 # Usage:
-#    ./build.sh lineageos-begonia -I robotnix=../
+#    ./build.sh lineageos-begonia
 #
 
 set -e
@@ -14,7 +14,6 @@ config="$1"; shift
 ARGS=(
 	--out-link "$config"
 	--arg configuration "./$config.nix"
-	'<robotnix>'
 	-A ota                          # Flashable zip we care about
 	-A bootImg                      # boot.img, necessary for "boot as recovery" machines
 	-A config.build.debugEnterEnv   # kA
