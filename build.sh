@@ -22,10 +22,11 @@ ARGS=(
 
 case "$config" in
 	"lineageos-begonia"      |\
-	"lineageos-lavender"      \
+	"lineageos-lavender"     |\
+	"lineageos-surfna"        \
 	)
 		ARGS+=(
-			-A recoveryImg                  # recovery.img, for other targets (XXX: may not exist?)
+			-A recoveryImg                  # recovery.img
 		)
 	;;
 esac
